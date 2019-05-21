@@ -23,6 +23,7 @@
             var arrayMuro = [];
             var posicaoPessoa = 0;
             var posicaoPorta = 0;
+            var contador = 0;
 
             gerarTelaAutomática();
 
@@ -32,9 +33,11 @@
                 }
             );
 
-            $("#executar").click(
+            $("#executarQua").click(
                 function () {
-                    var posicao = encontrarPorta(posicaoPessoa, tamanhoMuro);
+                    contador = 0;
+                    $("#movements").html('');
+                    var posicao = encontrarPortaQuadratico(posicaoPessoa, posicaoPessoa + 1);
                     if (posicao == null) {
                         alert("Porta não encontrada");
                     } else {
@@ -80,20 +83,33 @@
             }
 
             function imprimirPosicaoAtual() {
-                $("#movements").html($("#movements").html() + "<div class='padding-muro'></div>" + obterTelaAtual());
+                $("#movements").html($("#movements").html() + "<div class='padding-muro'></div>" + contador++ + obterTelaAtual());
             }
 
-            function encontrarPorta(inicio, fim) {
+            function encontrarPortaQuadratico(inicio, reach) {
                 posicaoPessoa = inicio;
                 imprimirPosicaoAtual();
                 if (arrayMuro[inicio] == 1) { // sucesso
                     return inicio;
                 }
-                if (inicio == fim) {
+                if (inicio == 0 || inicio == arrayMuro.length) { // sucesso
                     return null;
                 }
 
-                return encontrarPorta(inicio + 1, fim);
+                if (inicio == reach) {
+                    if (reach > Math.floor(tamanhoMuro / 2)) {
+                        reach -= contador;
+                    } else {
+                        reach += contador;
+                    }
+                }
+
+                var n = 1;
+                if (reach < Math.floor(tamanhoMuro / 2)) {
+                    n = - 1;
+                }
+
+                return encontrarPortaQuadratico(inicio + n, reach);
             }
         })
     </script>
@@ -116,8 +132,11 @@
     <div class="row">
         <div class="col-12">
             <br>
+            <button type="button" id="executarQua" class="btn btn-success">
+                Executar algorítmo Quadrático
+            </button>
             <button type="button" id="executar" class="btn btn-success">
-                Executar algorítmo
+                Executar algorítmo Linear
             </button>
             <br>
         </div>
