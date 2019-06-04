@@ -1,4 +1,4 @@
-# desafioMuro
+# Desafio do Muro
 
 O Desafio do muro, consiste em:
 Você está perdido em uma terra muito distante, e se encontra em frente a
