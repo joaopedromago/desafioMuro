@@ -14,105 +14,7 @@
             width: 100%;
         }
     </style>
-    <script>
-        $(document).ready(function () {
-            var person = "<i class='fa fa-cat'></i>";
-            var wall = "<i class='fa fa-chess-board'></i>";
-            var door = "<i class='fa fa-archway'></i>";
-            var tamanhoMuro = 51;
-            var arrayMuro = [];
-            var posicaoPessoa = 0;
-            var posicaoPorta = 0;
-            var contador = 0;
-
-            gerarTelaAutomática();
-
-            $("#reset").click(
-                function () {
-                    location.reload();
-                }
-            );
-
-            $("#executarQua").click(
-                function () {
-                    contador = 0;
-                    $("#movements").html('');
-                    var posicao = encontrarPortaQuadratico(posicaoPessoa, posicaoPessoa + 1);
-                    if (posicao == null) {
-                        alert("Porta não encontrada");
-                    } else {
-                        alert("Porta encontrada em: posição: " + posicao + ", passos: " + contador + ", distancia: " + Math.abs(Math.floor(tamanhoMuro / 2) - posicao));
-                    }
-                }
-            );
-
-            function gerarTelaAutomática() {
-                posicaoPessoa = Math.floor(tamanhoMuro / 2);
-                posicaoPorta = posicaoPessoa;
-
-                while (posicaoPorta == posicaoPessoa) {
-                    posicaoPorta = Math.floor(Math.random() * (tamanhoMuro - 1));;
-                }
-
-                for (let index = 0; index < tamanhoMuro; index++) {
-                    if (posicaoPorta == index) {
-                        arrayMuro.push(1);
-                    } else {
-                        arrayMuro.push(0);
-                    }
-                }
-
-                var stringMuro = obterTelaAtual();
-
-                $("#screen").html(stringMuro);
-            }
-
-            function obterTelaAtual() {
-                let stringMuro = '';
-                for (let index = 0; index < arrayMuro.length; index++) {
-                    const element = arrayMuro[index];
-                    if (index == posicaoPessoa) {
-                        stringMuro += person;
-                    } else if (element == 1) {
-                        stringMuro += door;
-                    } else {
-                        stringMuro += wall;
-                    }
-                }
-                return stringMuro;
-            }
-
-            function imprimirPosicaoAtual() {
-                $("#movements").html($("#movements").html() + "<div class='padding-muro'></div>" + contador++ + obterTelaAtual());
-            }
-
-            function encontrarPortaQuadratico(inicio, reach) {
-                posicaoPessoa = inicio;
-                imprimirPosicaoAtual();
-                if (arrayMuro[inicio] == 1) { // sucesso
-                    return inicio;
-                }
-                if (inicio == 0 || inicio == arrayMuro.length) { // sucesso
-                    return null;
-                }
-
-                if (inicio == reach) {
-                    if (reach > Math.floor(tamanhoMuro / 2)) {
-                        reach -= contador;
-                    } else {
-                        reach += contador;
-                    }
-                }
-
-                var n = 1;
-                if (reach < Math.floor(tamanhoMuro / 2)) {
-                    n = - 1;
-                }
-
-                return encontrarPortaQuadratico(inicio + n, reach);
-            }
-        })
-    </script>
+    <script src="script.js"></script>
 </head>
 
 <body>
@@ -133,10 +35,10 @@
         <div class="col-12">
             <br>
             <button type="button" id="executarQua" class="btn btn-success">
-                Executar algorítmo Quadrático
+                Executar algorítmo O(n²)
             </button>
-            <button type="button" id="executar" class="btn btn-success">
-                Executar algorítmo Linear
+            <button type="button" id="executarLin" class="btn btn-success">
+                Executar algorítmo O(n)
             </button>
             <br>
         </div>
