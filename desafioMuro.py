@@ -112,6 +112,7 @@ class MainClass:
     # Algorítmo para executar o programa
     def begin(self):
         while True:
+            self.personPosition = self.firstPosition
             self.updateWall()
             self.printScreen()
 
